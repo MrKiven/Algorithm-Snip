@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from collections import OrderedDict
+
 
 class Node(object):
     def __init__(self, k, v):
@@ -34,7 +36,7 @@ class DoubleLinkedList(object):
 
     def remove(self, node):
         if self.head == self.tail:
-            self.head = self.tail = None
+            self.head, self.tail = None, None
             return
         if node == self.head:
             node.next.prev = None
@@ -66,12 +68,12 @@ class LRUCache(object):
     def __init__(self, capacity=10):
         self.capacity = capacity
         self.size = 0
-        self.hash_map=dict()  # OrderedDict
+        self.hash_map=OrderedDict()  # OrderedDict
         self.cache = DoubleLinkedList()
 
     def get(self, key):
         if key in self.hash_map and self.hash_map[key]:
-            self.cache.remove(self.key)
+            self.cache.remove(self.hash_map[key])
             self.cache.addFirst(self.hash_map[key])
             return self.hash_map[key].value
 
